@@ -77,6 +77,24 @@ class Tools
         return strtoupper(md5("{$buff}key={$partnerKey}"));
     }
 
+    /***
+     * 退款签名解密
+     * @param $option
+     * @param $partnerKey
+     * @return mixed
+     */
+    static public function getRefundSign($option, $partnerKey)
+    {
+        $req_info = base64_decode($option['req_info']);
+        $partnerKey = strtolower(md5($partnerKey));
+        $xml =  openssl_decrypt($req_info,'aes-256-ecb',$partnerKey,OPENSSL_RAW_DATA);
+        if ($xml) {
+            return self::xml2arr($xml);
+        } else {
+            return false;
+        }
+    }
+
     /**
      * XML编码
      * @param mixed $data 数据
