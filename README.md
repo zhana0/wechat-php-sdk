@@ -45,8 +45,7 @@ WeChatDeveloper：https://github.com/zoujingli/WeChatDeveloper
 **微信`SDK`项目源文件托管**
 --
 * SDK 为开源项目，你可以把它用于任何地址，并不受任何约束，欢迎`fork`项目。
-* 通过 [Github](https://github.com/zoujingli/wechat-php-sdk) 下载 SDK 源代码
-* 通过 [OSChina](http://git.oschina.net/zoujingli/wechat-php-sdk) 下载 SDK 源代码
+* 通过 [Github](https://github.com/zhana0/wechat-php-sdk) 下载 SDK 源代码
 * 通过 [Composer](https://getcomposer.org) 包管理工具下载 SDK 源代码
 
 **微信`SDK`封装对接及功能**
