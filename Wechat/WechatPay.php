@@ -235,6 +235,38 @@ class WechatPay
         return $notifyInfo;
     }
 
+    /**
+     * 退款通知解密处理
+     * @return bool|array
+     */
+    public function getRefundNotify()
+    {
+        $notifyInfo = (array)simplexml_load_string(file_get_contents("php://input"), 'SimpleXMLElement', LIBXML_NOCDATA);
+        if (empty($notifyInfo)) {
+            Tools::log('Refund notification forbidden access.', 'ERR');
+            $this->errCode = '404';
+            $this->errMsg = 'Refund notification forbidden access.';
+            return false;
+        }
+        if (empty($notifyInfo['req_info'])) {
+            Tools::log('Refund notification signature is missing.' . var_export($notifyInfo, true), 'ERR');
+            $this->errCode = '403';
+            $this->errMsg = 'Refund notification signature is missing.';
+            return false;
+        }
+        $data = $notifyInfo;
+        $notifyInfo= Tools::getRefundSign($data, $this->partnerKey);
+        if (!$notifyInfo) {
+            Tools::log('Refund notification signature verification failed.' . var_export($notifyInfo, true), 'ERR');
+            $this->errCode = '403';
+            $this->errMsg = 'Refund signature verification failed.';
+            return false;
+        }
+        Tools::log('Refund notification signature verification success.' . var_export($notifyInfo, true), 'MSG');
+        $this->errCode = '0';
+        $this->errMsg = '';
+        return $notifyInfo;
+    }
 
     /**
      * 支付XML统一回复
@@ -391,6 +423,7 @@ class WechatPay
      * @param int $refund_fee 退款金额，不可大于订单总金额
      * @param int|null $op_user_id 操作员ID，默认商户ID
      * @param string $refund_account 退款资金来源
+     * @param string $notify_url 退款验签地址，默认null
      *        仅针对老资金流商户使用
      *        REFUND_SOURCE_UNSETTLED_FUNDS --- 未结算资金退款（默认使用未结算资金退款）
      *        REFUND_SOURCE_RECHARGE_FUNDS  --- 可用余额退款
@@ -398,7 +431,7 @@ class WechatPay
      * @param string $refund_fee_type 退款货币种类
      * @return bool
      */
-    public function refund($out_trade_no, $transaction_id, $out_refund_no, $total_fee, $refund_fee, $op_user_id = null, $refund_account = '', $refund_desc = '', $refund_fee_type = 'CNY')
+    public function refund($out_trade_no, $transaction_id, $out_refund_no, $total_fee, $refund_fee, $notify_url = null, $op_user_id = null, $refund_account = '', $refund_desc = '', $refund_fee_type = 'CNY')
     {
         $data = array();
         $data['out_trade_no'] = $out_trade_no;
@@ -406,6 +439,7 @@ class WechatPay
         $data['refund_fee'] = $refund_fee;
         $data['refund_fee_type'] = $refund_fee_type;
         $data['op_user_id'] = empty($op_user_id) ? $this->mch_id : $op_user_id;
+        !empty($notify_url) && $data['notify_url'] = $notify_url ;
         !empty($out_refund_no) && $data['out_refund_no'] = $out_refund_no;
         !empty($transaction_id) && $data['transaction_id'] = $transaction_id;
         !empty($refund_account) && $data['refund_account'] = $refund_account;
