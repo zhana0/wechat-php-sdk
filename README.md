@@ -1,7 +1,7 @@
-[![Latest Stable Version](https://poser.pugx.org/zoujingli/wechat-php-sdk/v/stable)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
-[![Total Downloads](https://poser.pugx.org/zoujingli/wechat-php-sdk/downloads)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
-[![Latest Unstable Version](https://poser.pugx.org/zoujingli/wechat-php-sdk/v/unstable)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
-[![License](https://poser.pugx.org/zoujingli/wechat-php-sdk/license)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
+[![Latest Stable Version](https://poser.pugx.org/zhana0/wechat-php-sdk/v/stable)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
+[![Total Downloads](https://poser.pugx.org/zhana0/wechat-php-sdk/downloads)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
+[![Latest Unstable Version](https://poser.pugx.org/zhana0/wechat-php-sdk/v/unstable)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
+[![License](https://poser.pugx.org/zhana0/wechat-php-sdk/license)](https://packagist.org/packages/zoujingli/wechat-php-sdk)
 
 此`SDK`运行最底要求`PHP`版本`5.3`, 建议在`PHP7`上运行以获取最佳性能。
 
